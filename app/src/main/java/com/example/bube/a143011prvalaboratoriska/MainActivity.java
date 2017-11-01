@@ -16,21 +16,44 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView tv = (TextView) findViewById(R.id.textViewOnMain);
-
-        Intent intent = getIntent();
-        if(intent.hasExtra("editText_value")){
-            if(!getIntent().getExtras().getString("editText_value").equals(null)){
-                tv.setText(getIntent().getExtras().getString("editText_value"));
-            }
-
-        }
+//        TextView tv = (TextView) findViewById(R.id.textViewOnMain);
+//
+//        Intent intent = getIntent();
+//        if(intent.hasExtra("editText_value")){
+//            if(!getIntent().getExtras().getString("editText_value").equals(null)){
+//                tv.setText(getIntent().getExtras().getString("editText_value"));
+//            }
+//
+//        }
 
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+
+            if (resultCode == RESULT_OK) {
+                TextView tv = (TextView) findViewById(R.id.textViewOnMain);
+                // Intent intent = getIntent();
+                // if(!getIntent().getExtras().getString("editText_value").equals(null)){
+                String result = data.getStringExtra("result");
+                tv.setText(result);
+                // tv.setText(getIntent().getExtras().getString("editText_value"));
+                // }
+            }
+            if (resultCode == MainActivity.RESULT_CANCELED) {
+                //  Same as back button pressed ( Old data on text view )
+            }
+        }
+    }//onActivityResult
+
+
+
     public void toExplicitActivity(View v){
         Intent i = new Intent(this, ExplicitActivity.class);
-        startActivity(i);
+        startActivityForResult(i,1);
     }
 
     public void ToImplicitActivity(View view) {
